@@ -9,7 +9,6 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Importando a fonte Poppins e a fonte Righteous (para o F) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Righteous&display=swap" rel="stylesheet">
 
     <style>
@@ -151,9 +150,7 @@
         .claw-arm-left { left: 4px; transform-origin: top center; transform: rotate(25deg); }
         .claw-arm-right { right: 4px; transform-origin: top center; transform: rotate(-25deg); }
 
-        /* =========================================
-           O PRÊMIO: LETRA "F" INVERTIDA E ESTILIZADA
-        ========================================= */
+        /* O PRÊMIO: LETRA "F" INVERTIDA E ESTILIZADA */
         .claw-prize {
             width: 60px;
             height: 60px;
@@ -170,14 +167,12 @@
 
         .claw-prize::before {
             content: 'F';
-            font-family: 'Righteous', sans-serif; /* Fonte arredondada e larga */
+            font-family: 'Righteous', sans-serif;
             font-size: 65px;
             color: var(--primary);
             line-height: 1;
-            /* Efeito: Inverte a letra (esquerda/direita) e inclina (itálico) */
             transform: scaleX(-1) skewX(-10deg);
             text-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            /* Deixa o F mais "gordinho" e arredondado */
             -webkit-text-stroke: 2px var(--primary); 
         }
 
@@ -224,6 +219,7 @@
             height: 100%;
         }
 
+        /* Caminho da logo atualizado para a pasta images */
         .logo-img { 
             height: 55px;
             width: auto;
@@ -991,8 +987,6 @@
             <div class="claw-led"></div>
             <div class="claw-arm-left"></div>
             <div class="claw-arm-right"></div>
-            
-            <!-- O PRÊMIO: O "F" INVERTIDO -->
             <div class="claw-prize"></div>
         </div>
     </div>
@@ -1000,7 +994,8 @@
     <!-- HEADER -->
     <header>
         <a href="#" class="logo-container">
-            <img src="logo.png" alt="Fun House" class="logo-img" id="mainLogo">
+            <!-- Logo atualizada -->
+            <img src="images/logo.webp" alt="Fun House" class="logo-img" id="mainLogo">
         </a>
         
         <nav>
@@ -1019,9 +1014,10 @@
     <!-- HERO -->
     <section class="hero" id="sobre">
         <div class="hero-slides">
-            <div class="slide active" style="background-image: url('slide1.jpg');"></div>
-            <div class="slide" style="background-image: url('slide2.jpg');"></div>
-            <div class="slide" style="background-image: url('slide3.jpg');"></div>
+            <!-- Slides atualizados -->
+            <div class="slide active" style="background-image: url('images/slide1.webp');"></div>
+            <div class="slide" style="background-image: url('images/slide2.webp');"></div>
+            <div class="slide" style="background-image: url('images/slide3.webp');"></div>
         </div>
 
         <div class="hero-overlay"></div>
@@ -1077,7 +1073,8 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="capa.jpg" alt="Máquina de Pelúcia Fun House" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <!-- Imagem da galeria atualizada e com lazy loading -->
+                <img src="images/capa.webp" alt="Máquina de Pelúcia Fun House" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-placeholder" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Grua LED Premium</p></div>
                 <div class="gallery-overlay">Showroom Fun House</div>
             </div>
@@ -1101,7 +1098,8 @@
             <div class="store-card">
                 <div class="store-image-wrapper">
                     <div class="store-tag">Showroom 1</div>
-                    <img src="loja1.jpg" alt="Showroom Fun House 1" onerror="this.src='https://via.placeholder.com/600x400/F8F9FA/CCCCCC?text=Foto+da+Loja+1'">
+                    <!-- Imagem da loja 1 atualizada e com lazy loading -->
+                    <img src="images/loja1.webp" alt="Showroom Fun House 1" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400/F8F9FA/CCCCCC?text=Foto+da+Loja+1'">
                 </div>
                 <div class="store-info">
                     <h3>Fun House - Matriz</h3>
@@ -1117,7 +1115,8 @@
             <div class="store-card">
                 <div class="store-image-wrapper">
                     <div class="store-tag">Showroom 2</div>
-                    <img src="loja2.jpg" alt="Showroom Fun House 2" onerror="this.src='https://via.placeholder.com/600x400/F8F9FA/CCCCCC?text=Foto+da+Loja+2'">
+                    <!-- Imagem da loja 2 atualizada e com lazy loading -->
+                    <img src="images/loja2.webp" alt="Showroom Fun House 2" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400/F8F9FA/CCCCCC?text=Foto+da+Loja+2'">
                 </div>
                 <div class="store-info">
                     <h3>Fun House - Filial</h3>
@@ -1160,7 +1159,8 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <img src="logo.png" alt="Fun House" style="height: 45px; margin-bottom: 15px;" onerror="this.src='https://via.placeholder.com/200x50/ffffff/E31837?text=FUN+HOUSE'">
+                <!-- Logo no rodapé atualizada -->
+                <img src="images/logo.webp" alt="Fun House" style="height: 45px; margin-bottom: 15px;" onerror="this.src='https://via.placeholder.com/200x50/ffffff/E31837?text=FUN+HOUSE'">
                 <p>A maior variedade de gruas de pelúcias e máquinas de diversão do mercado.</p>
             </div>
             <div class="footer-col">
