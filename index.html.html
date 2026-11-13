@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Fun House | Máquinas de Grua e Diversão para Shoppings</title>
+    <meta name="description" content="A maior variedade de gruas de pelúcias do mercado. A Fun House fornece máquinas de diversão premium e pelúcias no atacado para todo o Brasil. Orçamento via WhatsApp (44) 99121-2019.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importando a fonte Poppins e a fonte Righteous (para o F) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Righteous&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #E31837;
+            --primary-hover: #B8122B;
+            --secondary: #1A1A1A;
+            --bg-main: #FFFFFF; 
+            --bg-light: #F8F9FA;
+            --text-muted: #666666;
+            --border-color: #E5E5E5;
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-primary: 0 10px 25px rgba(227, 24, 55, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--secondary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* =========================================
+           BARRA DE DESTAQUE (TOP BAR)
+        ========================================= */
+        .top-bar {
+            background: var(--secondary);
+            color: #FFFFFF;
+            text-align: center;
+            padding: 10px 5%;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+        }
+
+        .top-bar span { display: flex; align-items: center; gap: 5px; }
+        .top-bar strong { color: var(--primary); }
+
+        /* =========================================
+           ANIMAÇÃO DA GARRA
+        ========================================= */
+        .claw-container {
+            position: fixed;
+            top: 0;
+            left: 8%;
+            width: 120px;
+            height: 100vh;
+            z-index: 9999;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.4s ease;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+
+        .claw-cable {
+            width: 6px;
+            background: repeating-linear-gradient(0deg, #777, #777 4px, #555 4px, #555 8px);
+            height: 100px;
+            transition: height 0.15s ease-out;
+            box-shadow: 1px 0 3px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .claw-motor {
+            width: 50px;
+            height: 25px;
+            background: linear-gradient(to bottom, #555, #222);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            z-index: 1;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2);
+        }
+
+        .claw-body {
+            width: 46px;
+            height: 30px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #999 50%, #666 100%);
+            border-radius: 8px;
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.8);
+            border: 1px solid #444;
+        }
+
+        .claw-led {
+            width: 10px;
+            height: 4px;
+            background: #00e5ff;
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            box-shadow: 0 0 8px #00e5ff;
+        }
+
+        .claw-arm-left, .claw-arm-right {
+            width: 10px;
+            height: 45px;
+            background: linear-gradient(to right, #888, #ccc, #666);
+            position: absolute;
+            top: 25px;
+            border-radius: 5px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+            border: 1px solid #555;
+        }
+
+        .claw-arm-left::after, .claw-arm-right::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 15px;
+            background: #222;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .claw-arm-left { left: 4px; transform-origin: top center; transform: rotate(25deg); }
+        .claw-arm-right { right: 4px; transform-origin: top center; transform: rotate(-25deg); }
+
+        /* =========================================
+           O PRÊMIO: LETRA "F" INVERTIDA E ESTILIZADA
+        ========================================= */
+        .claw-prize {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 65px;
+            opacity: 0; 
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px) scale(0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+        }
+
+        .claw-prize::before {
+            content: 'F';
+            font-family: 'Righteous', sans-serif; /* Fonte arredondada e larga */
+            font-size: 65px;
+            color: var(--primary);
+            line-height: 1;
+            /* Efeito: Inverte a letra (esquerda/direita) e inclina (itálico) */
+            transform: scaleX(-1) skewX(-10deg);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            /* Deixa o F mais "gordinho" e arredondado */
+            -webkit-text-stroke: 2px var(--primary); 
+        }
+
+        .claw-closed .claw-arm-left { transform: rotate(-5deg); }
+        .claw-closed .claw-arm-right { transform: rotate(5deg); }
+        
+        .claw-closed .claw-prize {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: swing 2s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+            0% { transform: translateY(0) scale(1) rotate(0deg); }
+            25% { transform: translateY(0) scale(1) rotate(5deg); }
+            75% { transform: translateY(0) scale(1) rotate(-5deg); }
+            100% { transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+        header {
+            position: fixed;
+            top: 38px;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border-color);
+            min-height: 85px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            height: 100%;
+        }
+
+        .logo-img { 
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover { transform: scale(1.05); }
+
+        .logo-fallback {
+            height: 55px;
+            padding: 0 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: #f9f9f9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--primary); }
+
+        .btn-header {
+            background: var(--primary);
+            color: white !important;
+            padding: 0.7rem 1.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            box-shadow: var(--shadow-primary);
+            transition: all 0.3s;
+        }
+
+        .btn-header:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           HERO COM SLIDESHOW
+        ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 180px 5% 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slides {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+            animation: zoomEffect 8s ease-out forwards;
+        }
+
+        @keyframes zoomEffect {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.75) 50%, rgba(10, 10, 10, 0.2) 100%);
+            z-index: 2;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-text { flex: 1; max-width: 650px; }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(227, 24, 55, 0.2);
+            color: #FF4D6D;
+            border: 1px solid rgba(227, 24, 55, 0.5);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+        }
+
+        .hero h1 span {
+            color: #FF3D8B;
+            text-shadow: 0 0 10px rgba(255, 61, 139, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #DDDDDD;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .slide-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 4;
+        }
+
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .slide-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .slide-dot:hover { background: rgba(255, 255, 255, 0.7); }
+
+        /* NÚMEROS */
+        .stats-section {
+            background: white;
+            padding: 50px 5%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* SEÇÕES GERAIS */
+        section { padding: 80px 5%; }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .section-header h2 span { color: var(--primary); }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* SOLUÇÕES */
+        .solutions-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .solution-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .solution-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .solution-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .solution-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .solution-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* GALERIA */
+        .gallery-section { background: var(--bg-light); }
+
+        .gallery-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .gallery-placeholder svg {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* NOSSAS LOJAS */
+        .stores-section {
+            background: var(--bg-main);
+        }
+
+        .stores-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .store-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .store-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        .store-image-wrapper {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .store-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .store-card:hover .store-image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .store-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .store-info {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .store-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .store-info p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-store {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--bg-light);
+            color: var(--secondary);
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-store:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* TOUR 360 */
+        .tour-section {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 80px 5%;
+            border-radius: 12px;
+            max-width: 1200px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tour-section h2 {
+            color: white;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .tour-section p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .tour-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 3rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .tour-btn:hover {
+            transform: scale(1.05);
+            background: var(--bg-light);
+        }
+
+        /* CTA FINAL */
+        .cta-section {
+            background: var(--secondary);
+            color: white;
+            padding: 80px 5%;
+            border-radius: 12px;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .cta-text { flex: 1; min-width: 300px; }
+
+        .cta-text h2 {
+            font-size: clamp(2rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .cta-text p { color: #aaa; font-size: 1.1rem; }
+
+        .cta-action {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cta-action h3 { margin-bottom: 15px; font-size: 1.3rem; }
+        .cta-action p { color: #aaa; margin-bottom: 20px; font-size: 0.9rem; }
+
+        .btn-whatsapp-large {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #25D366;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp-large:hover {
+            background: #1ebd59;
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: white;
+            padding: 60px 5% 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .footer-col p, .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-col a:hover { color: var(--primary); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* FLOATING WHATSAPP */
+        .float-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            z-index: 10000;
+            transition: transform 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .float-whatsapp:hover { transform: scale(1.1); }
+
+        .float-whatsapp svg { width: 35px; height: 35px; fill: white; }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.7), 0 0 0 15px rgba(37, 211, 102, 0.1); }
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 900px) {
+            .top-bar {
+                font-size: 0.75rem;
+                gap: 10px;
+                padding: 8px 2%;
+            }
+            
+            header {
+                top: 32px; 
+                min-height: 75px;
+                padding: 0.5rem 5%;
+            }
+            
+            .hero {
+                background-position: center right;
+                padding-top: 150px;
+            }
+            .hero-overlay {
+                background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.85) 100%);
+            }
+            .hero-container { flex-direction: column; text-align: center; }
+            .hero-text { max-width: 100%; display: flex; flex-direction: column; align-items: center; }
+            .hero p { margin: 0 auto 2.5rem; }
+            .hero-buttons { justify-content: center; }
+            
+            .claw-container {
+                left: 50%; 
+                transform: translateX(-50%);
+                width: 80px;
+                opacity: 0.9;
+            }
+            .claw-cable { width: 4px; }
+            .claw-motor { width: 35px; height: 18px; }
+            .claw-body { width: 34px; height: 22px; }
+            .claw-led { width: 8px; height: 3px; top: 5px; }
+            .claw-arm-left, .claw-arm-right { width: 8px; height: 35px; top: 18px; }
+            .claw-arm-left::after, .claw-arm-right::after { height: 10px; }
+            .claw-arm-left { left: 3px; }
+            .claw-arm-right { right: 3px; }
+            
+            /* Redimensiona o F no Mobile */
+            .claw-prize { width: 35px; height: 35px; top: 50px; }
+            .claw-prize::before { 
+                font-size: 45px; 
+                -webkit-text-stroke: 1.5px var(--primary); 
+            }
+
+            .stores-grid {
+                grid-template-columns: 1fr; 
+                gap: 30px;
+            }
+            .store-image-wrapper {
+                height: 250px;
+            }
+            
+            .logo-img, .logo-fallback {
+                height: 45px;
+            }
+            .slide-controls {
+                bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 107px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                box-shadow: var(--shadow-md);
+            }
+            nav ul.active { transform: translateX(0); }
+            .menu-toggle { display: block; }
+            .cta-section { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <span>🚀 <strong>Soluções</strong> para lojistas e operadores</span>
+        <span>📦 Atacado a partir de <strong>100 unidades</strong></span>
+        <span>🧸 Pelúcias Premium</span>
+        <span>🇧🇷 Enviamos para todo o <strong>Brasil</strong></span>
+    </div>
+
+    <!-- GARRA DA GRUA -->
+    <div class="claw-container" id="clawContainer">
+        <div class="claw-cable" id="clawCable"></div>
+        <div class="claw-motor" id="clawMotor"></div>
+        <div class="claw-body" id="clawBody">
+            <div class="claw-led"></div>
+            <div class="claw-arm-left"></div>
+            <div class="claw-arm-right"></div>
+            
+            <!-- O PRÊMIO: O "F" INVERTIDO -->
+            <div class="claw-prize"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="logo-container">
+            <img src="logo.png" alt="Fun House" class="logo-img" id="mainLogo">
+        </a>
+        
+        <nav>
+            <ul id="navMenu">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#variedade">Variedade</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#lojas">Lojas</a></li>
+                <li><a href="#tour">Tour 360°</a></li>
+                <li><a href="#contato" class="btn-header">Orçamento</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="sobre">
+        <div class="hero-slides">
+            <div class="slide active" style="background-image: url('slide1.jpg');"></div>
+            <div class="slide" style="background-image: url('slide2.jpg');"></div>
+            <div class="slide" style="background-image: url('slide3.jpg');"></div>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="hero-badge">🏆 Máquinas Grua & Pelúcias Premium</div>
+                <h1>Máquinas de Grua e <span>Diversão</span> para o Seu Negócio</h1>
+                <p>Soluções completas para lojistas e operadores. A Fun House fornece gruas de pelúcias e máquinas de diversão premium para shoppings e empresas. <strong>Atacado a partir de 100 unidades</strong> e enviamos para todo o Brasil.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/5544991212019?text=Olá!%20Quero%20um%20orçamento" class="btn-primary" target="_blank">Solicitar Orçamento</a>
+                    <a href="#galeria" class="btn-secondary">Ver Modelos</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-controls">
+            <button class="slide-dot active" onclick="currentSlide(0)"></button>
+            <button class="slide-dot" onclick="currentSlide(1)"></button>
+            <button class="slide-dot" onclick="currentSlide(2)"></button>
+        </div>
+    </section>
+
+    <!-- NÚMEROS -->
+    <div class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item"><h3>+50</h3><p>Modelos Disponíveis</p></div>
+            <div class="stat-item"><h3>100</h3><p>Unidades Mín. Atacado</p></div>
+            <div class="stat-item"><h3>BR</h3><p>Envio p/ Todo Brasil</p></div>
+            <div class="stat-item"><h3>24/7</h3><p>Suporte Técnico</p></div>
+        </div>
+    </div>
+
+    <!-- VARIEDADE -->
+    <section id="variedade">
+        <div class="section-header">
+            <h2>Nossa <span>Variedade</span> é Imbatível</h2>
+            <p>Soluções completas para o seu shopping ou loja de diversão</p>
+        </div>
+        <div class="solutions-grid">
+            <div class="solution-card"><span class="solution-icon">🕹️</span><h3>Gruas Clássicas</h3><p>O modelo tradicional que todo mundo ama. Robustas, com mecanismos de precisão e gabinetes resistentes.</p></div>
+            <div class="solution-card"><span class="solution-icon">💡</span><h3>Gruas LED Premium</h3><p>Máquinas com iluminação RGB, acrílicos de alta transparência e design moderno que atrai multidões.</p></div>
+            <div class="solution-card"><span class="solution-icon">🧸</span><h3>Pelúcias Premium</h3><p>Fornecemos as pelúcias mais desejadas do mercado. Originais, macias e licenciadas para encher a máquina. Atacado a partir de 100 un.</p></div>
+            <div class="solution-card"><span class="solution-icon">⚙️</span><h3>Mecanismos e Peças</h3><p>Peças de reposição, garras, placas e mecanismos de última geração para manutenção da sua frota.</p></div>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="gallery-section" id="galeria">
+        <div class="section-header">
+            <h2>Conheça Nossos <span>Equipamentos</span></h2>
+            <p>Confira a qualidade e o design das máquinas Fun House</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="capa.jpg" alt="Máquina de Pelúcia Fun House" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="gallery-placeholder" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Grua LED Premium</p></div>
+                <div class="gallery-overlay">Showroom Fun House</div>
+            </div>
+            <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Modelo Standard</p></div><div class="gallery-overlay">Grua Tradicional</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Pelúcias Premium</p></div><div class="gallery-overlay">Pelúcias Importadas</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Mecanismos</p></div><div class="gallery-overlay">Peças e Mecanismos</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Máquinas Arcade</p></div><div class="gallery-overlay">Diversão Arcade</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Showroom</p></div><div class="gallery-overlay">Nossa Loja Física</div></div>
+        </div>
+    </section>
+
+    <!-- NOSSAS LOJAS -->
+    <section class="stores-section" id="lojas">
+        <div class="section-header">
+            <h2>Visite Nossas <span>Lojas Físicas</span></h2>
+            <p>Conheça nossos showrooms e comprove a qualidade dos nossos equipamentos pessoalmente.</p>
+        </div>
+        <div class="stores-grid">
+            
+            <!-- LOJA 1 -->
+            <div class="store-card">
+                <div class="store-image-wrapper">
+                    <div class="store-tag">Showroom 1</div>
+                    <img src="loja1.jpg" alt="Showroom Fun House 1" onerror="this.src='https://via.placeholder.com/600x400/F8F9FA/CCCCCC?text=Foto+da+Loja+1'">
+                </div>
+                <div class="store-info">
+                    <h3>Fun House - Matriz</h3>
+                    <p>📍 Maringá - PR</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn-store">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Como Chegar
+                    </a>
+                </div>
+            </div>
+
+            <!-- LOJA 2 -->
+            <div class="store-card">
+                <div class="store-image-wrapper">
+                    <div class="store-tag">Showroom 2</div>
+                    <img src="loja2.jpg" alt="Showroom Fun House 2" onerror="this.src='https://via.placeholder.com/600x400/F8F9FA/CCCCCC?text=Foto+da+Loja+2'">
+                </div>
+                <div class="store-info">
+                    <h3>Fun House - Filial</h3>
+                    <p>📍 Shopping Center</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn-store">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Como Chegar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TOUR 360 -->
+    <div style="padding: 0 5%;">
+        <section class="tour-section" id="tour">
+            <h2>Faça um Tour Virtual 360°</h2>
+            <p>Navegue pelo nosso showroom sem sair de casa e veja as máquinas de perto.</p>
+            <a href="https://tour360.mgtour360.com.br" target="_blank" rel="noopener" class="tour-btn">🎥 Iniciar Tour 360°</a>
+        </section>
+    </div>
+
+    <!-- CTA FINAL -->
+    <section id="contato" style="padding-top: 0;">
+        <div class="cta-section">
+            <div class="cta-text">
+                <h2>Pronto para <span style="color:var(--primary)">Lucrar</span> com a Fun House?</h2>
+                <p>Fale agora com um especialista e monte a sua frota de máquinas de diversão. Atendemos shoppings, lojas e eventos em toda a região.</p>
+            </div>
+            <div class="cta-action">
+                <h3>Atendimento Rápido</h3>
+                <p>Clique no botão abaixo para ser redirecionado ao nosso WhatsApp comercial. Tire dúvidas e receba um orçamento personalizado.</p>
+                <a href="https://wa.me/5544991212019?text=Olá!%20Quero%20falar%20com%20um%20especialista" class="btn-whatsapp-large" target="_blank">💬 Chamar no WhatsApp (44) 99121-2019</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="logo.png" alt="Fun House" style="height: 45px; margin-bottom: 15px;" onerror="this.src='https://via.placeholder.com/200x50/ffffff/E31837?text=FUN+HOUSE'">
+                <p>A maior variedade de gruas de pelúcias e máquinas de diversão do mercado.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Links Rápidos</h4>
+                <a href="#sobre">Sobre Nós</a><a href="#variedade">Nossa Variedade</a><a href="#galeria">Galeria</a><a href="#lojas">Nossas Lojas</a><a href="#tour">Tour 360°</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contato</h4>
+                <a href="https://wa.me/5544991212019" target="_blank">WhatsApp: (44) 99121-2019</a>
+                <a href="https://tour360.mgtour360.com.br" target="_blank">Tour Virtual da Loja</a>
+            </div>
+            <div class="footer-col">
+                <h4>Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 8h às 18h</p><p>Sábado: 8h às 12h</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Fun House - Todos os direitos reservados | Máquinas de Grua e Diversão</p>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/5544991212019?text=Olá!%20Vim%20pelo%20site%20da%20Fun%20House%20e%20quero%20saber%20mais" class="float-whatsapp" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // LÓGICA DO SLIDESHOW
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        let slideInterval;
+
+        function showSlides(n) {
+            if (n >= slides.length) { slideIndex = 0; }
+            if (n < 0) { slideIndex = slides.length - 1; }
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[slideIndex].classList.add('active');
+            dots[slideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            slideIndex++;
+            showSlides(slideIndex);
+        }
+
+        function currentSlide(n) {
+            clearInterval(slideInterval);
+            slideIndex = n;
+            showSlides(slideIndex);
+            startSlideShow();
+        }
+
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        showSlides(slideIndex);
+        startSlideShow();
+
+        // LOGO FALLBACK
+        const logoImg = document.getElementById('mainLogo');
+        logoImg.onerror = function() {
+            const fallback = document.createElement('div');
+            fallback.className = 'logo-fallback';
+            fallback.innerText = 'Sua Logo Aqui';
+            this.parentNode.replaceChild(fallback, this);
+        };
+
+        // MENU MOBILE E SCROLL
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); });
+        
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => { navMenu.classList.remove('active'); });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+
+        // LÓGICA DA GARRA
+        const clawCable = document.getElementById('clawCable');
+        const clawBody = document.getElementById('clawBody');
+        const clawContainer = document.getElementById('clawContainer');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollTop / docHeight;
+            
+            if (window.innerWidth <= 900) {
+                if (scrollTop > 300 && scrollPercent < 0.8) {
+                    clawContainer.style.opacity = 0;
+                } else {
+                    clawContainer.style.opacity = 0.9;
+                }
+            } else {
+                clawContainer.style.opacity = 1;
+            }
+            
+            const maxCableHeight = window.innerHeight * 0.75; 
+            const currentCableHeight = 100 + (maxCableHeight - 100) * scrollPercent;
+            
+            clawCable.style.height = `${currentCableHeight}px`;
+
+            if (scrollPercent > 0.85) {
+                clawBody.classList.add('claw-closed');
+            } else {
+                clawBody.classList.remove('claw-closed');
+            }
+        });
+    </script>
+</body>
+</html>
